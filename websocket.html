@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebSocket</title>
+</head>
+<body></body>
+<h2>WebSocket</h2>
+<input type="text" id="message" placeholder="Enter a message">
+<button onclick="sendMessage()">Send</button>
+<pre id="output"></pre>
+<script>
+const ws = new WebSocket('ws://localhost:3000/websocket');
+
+ws.onopen = () => {
+  console.log('WebSocket connection opened');
+};
+
+ws.onmessage = (event) => {
+  const message = event.data;
+  console.log('Received message:', message);
+  document.getElementById('output').textContent += `Received: ${message}\n`;
+};
+
+function sendMessage() {
+  const message = document.getElementById('message').value;
+  ws.send(message);
+  document.getElementById('output').textContent += `Sent: ${message}\n`;
+  document.getElementById('message').value = '';
+}
+</script>
+</body>
+</html>
